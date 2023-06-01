@@ -1,0 +1,59 @@
+{% extends 'portfolio/base.html' %}
+{% load static %}
+
+{% block content %}
+    <div class="body_nav">
+        <nav>
+            <ul class="top-menu">
+                <li id="nav-bar" class="active"><a class="top-menu-a" href="{% url 'home' %}">Главная</a></li>
+                <li id="nav-bar"><a class="top-menu-a" href="{% url 'projects' %}">Мои работы</a></li>
+                <li id="nav-bar"><a class="top-menu-a" href="/contacts/">Контакты</a></li>
+                {% if user.is_authenticated %}
+                    <li id="nav-bar">
+                        <div class="dropdown">
+                            <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton2" data-bs-toggle="dropdown" aria-expanded="false">
+                                Меню
+                            </button>
+                            <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="dropdownMenuButton2">
+                                <li><a class="dropdown-item active" href="{% url 'profile' %}">Профиль</a></li>
+                                {% if user.is_superuser or user.is_staff %}
+                                    <li><a class="dropdown-item" href="{% url 'article' %}">Посты</a></li>
+                                    <li><a class="dropdown-item" href="{% url 'admin:index' %}">Админ-панель</a></li>
+                                {% endif %}
+                                <li><hr class="dropdown-divider"></li>
+                                <li><a class="dropdown-item" href="{% url 'logout' %}">Выйти</a></li>
+                            </ul>
+                        </div>
+                    </li>
+                {% else %}
+                    <li id="nav-bar" class="sign-in-block">
+                        <div class="sign-in-block">
+                            <a class="sign-in" href="{% url 'login' %}">Войти</a>
+                        </div>
+                    </li>
+                {% endif %}
+            </ul>
+        </nav>
+    </div>
+    <div id="heading">
+        <h1>Главная</h1>
+    </div>
+    <div id="body-wrapper">
+        <blockquote>
+                <p>
+                    "Питон это моя жизнь!!!<br>
+                    "Джанго это мой воздух!!!"
+                </p>
+                <cite>Хмурин Владимир</cite>
+        </blockquote>
+        <div class="photo_and_text">
+            <p>
+{#                <img height="400px" src="/static/img/me.jpg" alt="Мое фото">#}
+                Меня зовут Владимир.<br><br>
+                Я занимаюсь веб разработкой на Python_Django в течении 3 месяцев.
+                Так же обладаю базовыми навыками верстки HTML+CSS.<br><br>
+                Мои работы можно посмотреть в разделе "Мои работы"
+            </p>
+        </div>
+    </div>
+{% endblock %}

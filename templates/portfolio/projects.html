@@ -1,0 +1,60 @@
+{% extends 'portfolio/base.html' %}
+{% load static %}
+
+{% block content %}
+    <div class="body_nav">
+        <nav>
+            <ul class="top-menu">
+                <li id="nav-bar"><a class="top-menu-a" href="{% url 'home' %}">Главная</a></li>
+                <li id="nav-bar" class="active"><a class="top-menu-a" href="{% url 'projects' %}">Мои работы</a></li>
+                <li id="nav-bar"><a class="top-menu-a" href="/contacts/">Контакты</a></li>
+                {% if user.is_authenticated %}
+                    <li id="nav-bar">
+                        <div class="dropdown">
+                            <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton2" data-bs-toggle="dropdown" aria-expanded="false">
+                                Меню
+                            </button>
+                            <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="dropdownMenuButton2">
+                                <li><a class="dropdown-item active" href="#">Профиль</a></li>
+                                <li><a class="dropdown-item" href="#">Админ-панель</a></li>
+                                <li><hr class="dropdown-divider"></li>
+                                <li><a class="dropdown-item" href="#">Выйти</a></li>
+                            </ul>
+                        </div>
+                    </li>
+                {% else %}
+                    <li id="nav-bar" class="sign-in-block">
+                        <div class="sign-in-block">
+                            <a class="sign-in" href="#">Войти</a>
+                        </div>
+                    </li>
+                {% endif %}
+            </ul>
+        </nav>
+    </div>
+    <div id="heading">
+        <h1>Мои работы</h1>
+    </div>
+    <div id="body-wrapper">
+        <aside>
+            {% for category in categories %}
+                <ul class="aside-menu">
+                    <li><a href="{% url 'projects' %}">Все категории</a></li>
+                    <li><a href="{% url 'category' category.id %}">{{ category.name }}</a></li>
+                </ul>
+            {% endfor %}
+        </aside>
+        {% for article in articles %}
+            <section id="{{ article.id }}">
+                <a href="{{ article.urls }}" target="_blank">{{ article.name }}</a>
+                <br>
+                <p>
+                    {{ article.article }}
+                </p>
+                <figure>
+                    <img src="{{ article.images.url }}" width="450" alt="Фото сайта">
+                </figure>
+            </section>
+        {% endfor %}
+    </div>
+{% endblock %}
